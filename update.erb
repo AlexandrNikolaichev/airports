@@ -1,0 +1,17 @@
+<%
+q = servlet_request.query
+
+options = {
+  apikey: q["apikey"],
+  station: q["station"],
+  date: q["date"],
+  system: "iata",
+  event: q["event"]
+}
+
+text = `curl "https://api.rasp.yandex.net/v3.0/schedule/?#{options.map{|key, value| "#{key}=#{value}"}.join("&")}"`
+
+
+File.open("public/data.json",'w'){|f| f.write(text)}
+
+%>
